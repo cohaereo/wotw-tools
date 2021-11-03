@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <link href="./main.css" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <title>Damage calculator</title>
+</head>
+<script>
+    function calculate_damage(base, attacker_damage, receiver_defense) {
+        var char_base = base + ((base * attacker_damage) / 100.0 - base * 0.5);
+        return char_base - (char_base * ((receiver_defense * 0.5) / 100.0));
+    }
+
+    function calculate_all_damage() {
+        let damage = document.getElementById("attacker_damage").value;
+        let defense = document.getElementById("receiver_defense").value;
+
+        document.getElementById("output-text").innerHTML = `
+Punch:      ${calculate_damage(3, damage, defense).toPrecision(3)}
+Kick:       ${calculate_damage(6, damage, defense).toPrecision(3)}
+Air Punch:  ${calculate_damage(5, damage, defense).toPrecision(3)}
+Slam:       ${calculate_damage(20, damage, defense).toPrecision(3)}
+`;
+    }
+</script>
+<body onload="calculate_all_damage()">
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <label for="attacker_damage" class="form-label">Attacker damage</label>
+                <input type="number" class="form-control num_input" id="attacker_damage" value="50" min="0" max="255"><br/>
+                <label for="receiver_defense" class="form-label">Receiver defense</label>
+                <input type="number" class="form-control num_input" id="receiver_defense" value="50" min="0" max=255><br/>
+                <a class="btn btn-primary" onclick="calculate_all_damage()" role="button">Calculate</a>
+                <br/><br/>
+                <pre id="output-text"></pre>
+            </div>
+
+
+            <div class="col">
+                <div class="alert alert-dark">
+                    <pre>
+damage values:
+    tom:            50
+    jerry:          50
+    spike:          90
+    butch:          10
+    nibbles:        10
+    duckling:       10
+    tyke:           10
+    eagle:          90
+    monster jerry:  90
+    robot cat:      90
+    lion:           50</pre>
+                </div>
+                <div class="alert alert-dark">
+                    <pre>
+defense values:
+    tom:            50
+    jerry:          50
+    spike:          90
+    butch:          10
+    nibbles:        50
+    duckling:       10
+    tyke:           50
+    eagle:          10
+    monster jerry:  50
+    robot cat:      50
+    lion:           90</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
